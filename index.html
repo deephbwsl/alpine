@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                sidebar: "#F5F5F5",
+                sidebarTitle: "#EFEFEF",
+                bulletColor: "#C2C2C2",
+                accordionBg: "#077DFA",
+              },
+            },
+          },
+        };
+    </script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+
+    <style type="text/tailwindcss">
+        @layer components {
+          .widget-btn {
+            @apply rounded border-2 border-gray-200 px-2 py-1 bg-gray-100 opacity-90 text-sm active:widget-btn-active;
+          }
+          .widget-btn-active {
+            @apply bg-blue-500 text-white border-blue-500;
+          }
+        }
+      </style>
+
+</head>
+<body>
+
+    <div class="main-container flex h-screen" >
+        <div class="left-container w-1/5 bg-sidebar">
+            <div class="title-container bg-sidebarTitle p-2" >
+                <h2 class="font-bold opacity-90">
+                    Widgets
+                </h2>
+            </div>
+
+            <div class="list-items-container p-2" >
+                <ul
+                    x-data="{
+                        items: ['Accordion', 'Autocomplete', 'Button', 'Checkboxradio', 'Controlgroup', 'Datepicker', 'Dialogg', 'Menu', 'Progressbar', 'Selectmenu', 'Slider', 'Spinner', 'Tabs', 'Tooltip'],
+                        switchWidget(e){
+                            e.preventDefault()
+                            let listItemId = ed.target.getAttribute('id');
+                            $('.right-container > div').each(function () {
+                                if($(this).attr('id')!=listItemId){
+                                  $(this).addClass('hidden')
+                                }else{
+                                  $(this).removeClass('hidden')
+                                }
+                              });
+                        }
+                    }"
+                    class="list-disc list-inside marker:text-bulletColor marker:text-lg opacity-90"
+                >
+                    <template x-for="item in items">
+                        <li class="p-2">
+                            <a href=""
+                                x-text="item"
+                                class="hover:underline"
+                                x-on:click="switchWidget(event)"
+                                :id="item.toLowerCase()"
+                            ></a>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+    
+</body>
+</html>
